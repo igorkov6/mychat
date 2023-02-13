@@ -1,0 +1,47 @@
+{% extends 'default.html' %}
+
+{% block title %}Groups{% endblock %}
+
+{% block content %}
+
+    <h1>Управление группами</h1>
+
+    <!-- заголовок -->
+    <div class="field-header">
+        <div class="row-flex">
+            <div class="column-flex-header"><b>Группы</b><br>выбрать группу</div>
+            <div class="column-flex-header"><b>Контакты</b><br>добавить в группу</div>
+            <div class="column-flex-header"><b>Группа <span id="current_group" name=""></span></b><br>удалить из группы
+            </div>
+        </div>
+    </div>
+    <!-- таблица -->
+    <div class="field">
+        <div class="row-flex">
+            <div class="column-flex-field" id="groups_column"></div>
+            <div class="column-flex-field" id="users_column"></div>
+            <div class="column-flex-field" id="group_users_column"></div>
+        </div>
+    </div><br>
+    <hr><br>
+    <!-- управление -->
+    <div style="display: flex">
+        <input type="text" id="group_name" value="" class="text-input" placeholder="Имя группы...">
+        <button class="submit" id="create_group" onclick="createGroup()">Создать</button>
+        &nbsp
+        <button class="submit" id="update_group" onclick="updateGroup()">Изменить</button>
+        &nbsp
+        <button class="submit" onclick="deleteGroup()" style="width: 15%">Удалить <span id="button_group"
+                                                                                        style="font-weight: bold"></span>
+        </button>
+    </div>
+
+{% endblock %}
+
+{% block script %}
+    <script src="/static/js/group.js"></script>
+{% endblock %}
+
+{% block footer %}
+    создание, редактирование и удаление групповых чатов по REST API
+{% endblock %}

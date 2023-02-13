@@ -1,0 +1,530 @@
+/* серая тема */
+:root {
+    --main-bg: #eee;
+    --main-color: #333;
+
+    --nav-bg: #555;
+    --nav-color: #eee;
+    --nav-hover-bg: #eee;
+    --nav-hover-color: #333;
+    --nav-logo-color: yellow;
+    --nav-select: #999;
+
+    --link-color: royalblue;
+    --link-hover: darkcyan;
+
+    --header-bg: #ccc;
+    --field-bg: #ddd;
+    --field-height: 300px;
+
+    --face-bg: #bbb;
+    --face-hover: #aaa;
+}
+
+* {
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--main-bg);
+    color: var(--main-color);
+    min-width: 600px;
+    background: var(--main-bg) url(../media/wall.jpg) no-repeat;
+    background-size: 100% 100%;
+    height: 100vh;
+}
+
+/* элементы форм */
+h1 {
+    border-bottom: 1px solid #bbb;
+    padding: 0 0 10px 0;
+    margin: 10px 0 20px 0;
+}
+
+h2 {
+    margin: 30px 0 20px;
+}
+
+.submit {
+    padding-left: 1.25rem;
+    padding-right: 1.25rem;
+    border-radius: 0.75rem;
+    background-color: var(--face-bg);
+    border: hidden;
+    word-wrap: break-word;
+}
+
+.submit:hover {
+    background-color: var(--face-hover);
+}
+
+input, textarea {
+    clear: both;
+    float: left;
+    margin: 0 0 10px;
+    background-color: var(--face-bg);
+    border: hidden;
+    padding: 6px 10px;
+    font-size: 14px;
+    border-radius: 10px;
+}
+
+.text-input {
+    flex: 1 1 0;
+    margin-right: 0.75rem;
+    margin-top: 1rem;
+}
+
+/* формы регистрации */
+.login-form {
+    float: left;
+}
+
+.login-form a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+.login-form a:hover {
+    color: var(--link-hover);
+}
+
+.login-form label {
+    float: left;
+    clear: both;
+    margin-bottom: 4px;
+}
+
+.login-form .helptext {
+    margin: 0 0 20px 0;
+    color: #aaa;
+    clear: both;
+    float: left;
+    font-size: 13px;
+}
+
+.login-form .errorlist {
+    color: #cc0033;
+    float: left;
+    clear: both;
+    padding-left: 10px;
+}
+
+.login-form form {
+    overflow: auto;
+}
+
+.login-form form p {
+    width: 100%;
+    overflow: auto;
+}
+
+.social {
+    float: right;
+}
+
+.social li {
+    list-style: none;
+    padding: 10px 20px;
+    margin: 0 0 10px 0;
+    border-radius: 10px;
+}
+
+.social li a {
+    width: 100%;
+    height: 100%;
+    display: block;
+    color: white;
+    text-decoration: none;
+}
+
+.social li a:hover {
+    color: black;
+}
+
+.social li.twitter {
+    background: #00cffa;
+}
+
+.social li.google {
+    background:#3b5399;
+}
+
+.social li.register {
+    background: #de1710;
+}
+
+/* навигатор */
+.topnav {
+    overflow: hidden;
+    background-color: var(--nav-bg);
+    color: var(--nav-color);
+}
+
+.topnav .logo {
+    float: left;
+    display: block;
+    color: var(--nav-logo-color);
+    text-align: center;
+    padding: 20px 16px;
+    font-weight: bold;
+}
+
+.topnav a {
+    float: left;
+    display: block;
+    text-align: center;
+    padding: 20px 16px;
+    text-decoration: none;
+    color: var(--nav-color);
+}
+
+.topnav a:hover {
+    background-color: var(--nav-hover-bg);
+    color: var(--nav-hover-color);
+}
+
+.topnav .user {
+    float: right;
+}
+
+.topnav ul.menu {
+    list-style: none;
+    float: left;
+    margin: 0;
+    padding-inline-start: 0;
+}
+
+.topnav ul.menu li {
+    float: left;
+}
+
+.topnav ul.menu li.selected a, .topnav ul.menu li.selected a:hover {
+    color: var(--nav-select);
+    background-color: var(--nav-bg);
+}
+
+.topnav ul.menu li.unselected a, .topnav ul.menu li.unselected a:hover {
+    background-color: var(--nav-bg);
+    color: var(--nav-color);
+}
+
+/* контент */
+.content {
+    padding: 10px 100px;
+    font-size: 14px;
+    overflow: auto;
+}
+
+/* подвал */
+.footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    background: var(--face-bg);
+    padding: 10px;
+    text-align: center;
+}
+
+/* рабочее поле */
+.field {
+    background-color: var(--field-bg);
+}
+
+.field-header {
+    background-color: var(--header-bg);
+    padding: 4px;
+    text-align: center;
+}
+
+/* колонки автоматические */
+.row-flex {
+    display: -webkit-flex;
+    display: flex;
+}
+
+.column-flex-header {
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    padding: 10px;
+}
+
+.column-flex-field {
+    -webkit-flex: 1;
+    -ms-flex: 1;
+    flex: 1;
+    padding: 10px;
+    height: var(--field-height);
+    overflow-y: scroll;
+}
+
+/* колонки настраиваемые */
+.row-float:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.column-float {
+    float: left;
+}
+
+.column-float.p40 {
+    width: 40%;
+}
+
+.column-float.p20 {
+    width: 20%;
+}
+
+/* элементы groups */
+.list-button {
+    border: hidden;
+    padding: 10px 8px;
+    background-color: var(--face-bg);
+    border-radius: 10px;
+    display: block;
+    font-size: 14px;
+    width: 100%;
+}
+
+.list-button:hover {
+    background-color: var(--face-hover);
+}
+
+/* элементы chat */
+.user-list-item {
+    padding: 16px;
+    text-decoration: none;
+    display: block;
+    background-color: var(--face-bg);
+    border-radius: 10px;
+    text-align: center;
+    color: var(--main-color);
+}
+
+.user-list-item:hover {
+    background-color: var(--face-hover);
+    color: var(--main-color);
+}
+
+.list-item {
+    display: flex;
+    justify-content: left;
+}
+
+.list-item-content {
+    display: flex;
+    align-items: center;
+}
+
+.list-item-photo {
+    display: flex;
+    width: 64px;
+}
+
+.list-item-user {
+    float: left;
+    padding-left: 5px;
+}
+
+/* элементы room */
+#chat-log {
+    display: block;
+    height: var(--field-height);
+    overflow-y: scroll;
+    background-color: var(--field-bg);
+}
+
+#chat-box {
+    background-color: var(--face-bg);
+    padding: 4px 10px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+    width: 60%;
+    font-size: 16px;
+}
+
+#chat-name {
+    font-weight: bold;
+    color: var(--link-color);
+}
+
+#chat-time {
+    float: right;
+    font-size: 10px;
+}
+
+.chat-text {
+    word-wrap: break-word;
+}
+
+.chat-left {
+    float: left;
+    margin-left: 16px;
+}
+
+.chat-right {
+    float: right;
+    margin-right: 16px;
+}
+
+/* аватары */
+.circle-image_small {
+    width: 48px;
+    height: 48px;
+    display: inline-block;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.circle-image_small img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.circle-image_large {
+    width: 64px;
+    height: 64px;
+    display: inline-block;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.circle-image_large img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.avatar_small {
+    font-size: 24px;
+    width: 48px;
+    height: 48px;
+    background-color: var(--field-bg);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.avatar_large {
+    font-size: 32px;
+    width: 64px;
+    height: 64px;
+    background-color: var(--face-hover);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+/* всплывающие сообщения */
+ul.messages {
+    margin: 10px 100px;
+    padding: 0;
+    list-style-type: none;
+}
+
+ul.messages li.success,
+ul.messages li.warning,
+ul.messages li.error,
+ul.messages li.info {
+    margin: 0;
+    padding: 14px 20px;
+    list-style: none;
+    color: #fff;
+}
+
+ul.messages li.success {
+    background: #81ce81;
+}
+
+ul.messages li.success a {
+    color: #0ac33e;
+}
+
+ul.messages li.error {
+    background: #a30029;
+    color: #e9828e;
+}
+
+ul.messages li.error a {
+    color: #e9828e;
+}
+
+ul.messages li.info {
+    background: #faffae;
+    color: #696b4e;
+}
+
+ul.messages li.info a {
+    color: #1586de;
+}
+
+ul.messages li.warning {
+    background: #de9404;
+}
+
+ul.messages li.warning a {
+    color: #f49000;
+}
+
+ul.messages li a.close {
+    margin: 0;
+    float: right;
+    opacity: 1;
+    border: 0;
+    box-shadow: none;
+    text-shadow: none;
+}
+
+/* настройки для узкого экрана */
+@media (max-width: 800px) {
+    .content {
+        padding: 10px 10px;
+    }
+
+    ul.messages {
+        margin: 10px 10px;
+        padding: 0;
+    }
+
+    .column-flex-field {
+        height: 250px;
+    }
+
+    .column-float.p20, .column-float.p40 {
+        width: 100%;
+    }
+
+    .topnav .user {
+        float: left;
+    }
+
+    .topnav .logo {
+        padding: 10px 16px;
+    }
+
+    .topnav a {
+        padding: 10px 16px;
+    }
+
+    #chat-log {
+        height: 250px;
+    }
+
+    .footer {
+        height: 60px;
+    }
+}

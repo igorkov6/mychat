@@ -1,0 +1,46 @@
+{% extends 'default.html' %}
+
+{% block title %}Edit{% endblock %}
+
+{% block content %}
+
+    <h1>Личные данные</h1>
+
+    <div class="login-form">
+
+        <p><b>Введите личные данные:</b></p>
+
+        <form action="." method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="row-float">
+                <div class="column-float">
+                    {{ user_form.as_div }}
+                </div>
+            </div>
+
+            <label>Фото</label><br>
+            {% if request.user.profile.photo %}
+                <img src="/media/{{ request.user.profile.photo }}" alt="photo" height="64" width="auto">
+                <table>
+                    <tr>
+                        <td><input type="checkbox" name="photo-clear" id="photo-clear_id"></td>
+                        <td><label for="photo-clear_id">Clear</label></td>
+                    </tr>
+                </table>
+            {% endif %}
+            <input type="file" name="photo" accept="image/*" class="mt-5 text-white">
+
+            <p>
+                <button class="submit" style="padding: 10px 20px;">Сохранить изменения</button>
+            </p>
+            <p><a href="{% url "password_change" %}">Изменить пароль</a>.
+            <p>
+        </form>
+
+    </div>
+
+{% endblock %}
+
+{% block footer %}
+    редактирование личной информации пользователя (имя и аватар)
+{% endblock %}

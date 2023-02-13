@@ -1,0 +1,77 @@
+    Windows                           | Linux
+--------------------------------------+---------------------------------
+ 1. Создать папку                     |
+ 2. Создать файл .gitignore           |
+ 3. Открыть папку в PyCharm           |
+ 4. Подключить Git                    |
+ 5. python -m venv venv               | python3 -m venv venv
+ 6. venv\scripts\activate             | source venv/bin/activate
+ 7. pip install django                |
+ 8. django-admin startproject project |
+ 9. cd project                        |
+
+python manage.py runserver
+python manage.py createsuperuser
+python manage.py makemigrations
+python manage.py migrate
+python manage.py startapp appname
+
+# зависимости
+python -m pip freeze > requirements.txt
+python -m pip install -r requirements.txt
+
+# генератор рыба - текста
+https://fish-text.ru/
+
+# удалить файл / папку из кеша
+git rm --cached .gitignore
+git rm -r --cached news_portal/cache_files/
+
+# старт планировщика во втором окне терминала
+python manage.py runapscheduler
+
+# старт запускальщика задач во втором окне терминала
+celery -A news_portal worker -l INFO
+
+# старт планировщика задач в третьем окне терминала
+celery -A news_portal beat -l INFO
+
+# чат
+https://www.youtube.com/watch?v=SF1k_Twr9cg
+
+npm install -D tailwindcss
+npx tailwindcss init
+npm install -D @tailwindcss/forms
+
+// tailwind.config.js
+module.exports = {
+  theme: {
+    // ...
+  },
+  plugins: [
+    require('@tailwindcss/forms'),
+    // ...
+  ],
+}
+
+# установить channels вот так:
+python -m pip install -U channels["daphne"]
+# из
+https://channels.readthedocs.io/en/stable/tutorial/part_1.html
+
+#postgresql
+https://stackpython.medium.com/how-to-start-django-project-with-a-database-postgresql-aaa1d74659d8
+pgAdmin - создать базу данных
+python -m pip install psycopg2
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'your_db_name',
+        'USER': 'your_user_name',
+        'PASSWORD': 'your_db_password',
+        'HOST': '127.0.0.1',
+        'PORT': '5432',
+    }
+}
+python manage.py makemigrations
+python manage.py migrate

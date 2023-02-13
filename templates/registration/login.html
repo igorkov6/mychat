@@ -1,0 +1,42 @@
+{% extends 'default.html' %}
+
+{% block title %}Login{% endblock %}
+
+{% block content %}
+
+    <h1>Вход</h1>
+
+    <div class="row-flex">
+        <div class="column-flex-field" style="overflow-y: auto">
+            <div class="login-form">
+                <form action="." method="post">
+                    {% csrf_token %}
+                    {{ form.as_div }}
+                    <p>
+                        <button class="submit" style="padding: 10px 20px;">Войти</button>
+                    </p>
+                </form>
+            </div>
+        </div>
+        <div class="column-flex-field" style="overflow-y: auto">
+            <div class="social">
+                <ul>
+                    <li class="twitter"><a href="{% url 'social:begin' 'vk-oauth2' %}">Войти через VK</a></li>
+                    <li class="google"><a href="{% url "social:begin" "google-oauth2" %}">Войти через Google</a></li>
+                    <li class="register"><a href="{% url "register" %}">Регистрация</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <ul>
+        <li>Нет аккаунта - зарегистрируйтесь</li>
+        <li>Забыли логин - введите email</li>
+        <li>Забыли пароль - <a href="#">Восстановить пароль</a></li>
+    </ul>
+
+{% endblock %}
+
+{% block footer %}
+    Skillfactory 2023
+{% endblock %}
