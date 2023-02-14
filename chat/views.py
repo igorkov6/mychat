@@ -139,10 +139,6 @@ def edit(request):
             return render(request, 'dashboard.html')
     else:
         user_form = UserEditForm(instance=request.user)
-        try:
-            x = request.user.profile
-        except Exception:
-            Profile.objects.create(user=request.user)
         profile_form = ProfileEditForm(instance=request.user.profile)
     return render(request, 'registration/edit.html', {'user_form': user_form, 'profile_form': profile_form})
 
