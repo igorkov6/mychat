@@ -6,7 +6,7 @@ from .forms import UserRegistrationForm, UserEditForm, ProfileEditForm
 from django.contrib.auth.decorators import login_required
 from .models import Message, Profile
 from django.contrib import messages
-import redis
+import redis, json
 from django.conf import settings
 
 
@@ -50,7 +50,9 @@ def chat(request):
     return render(request, "chat/chat.html", {'current_user': current_user,
                                               'groups': groups,
                                               'users': users,
-                                              'section': 'chat'})
+                                              'section': 'chat',
+                                              'current_group': '',
+                                              'contr_name': ''})
 
 
 @login_required
@@ -168,4 +170,44 @@ def group(request):
     :param request:
     :return:
     """
-    return render(request, 'chat/group.html', {'section': 'group'})
+    return render(request, 'chat/group.html', {'section': 'group',
+                                               'current_group': '',
+                                               'contr_name': ''})
+
+
+@login_required
+def update(request):
+    """
+    Получить сообщение из стека
+    :param request:
+    :return:
+    """
+
+    # получатель
+    name = "user:{}".format(request.user.id)
+    # найти сообщение для получателя
+    record = rds.rpop(name)
+    # сообщение есть
+    if record is not None:
+        my_dict = json.loads(record)
+
+        # получить данные из словаря
+        sender = my_dict["sender"]
+        message = my_dict["message"]
+
+        # найти имя отправителя
+        sender = sender.split(":")
+        if sender[0] == "user":
+            user = User.objects.get(id=sender[1])
+            if user.first_name or user.last_name:
+                sender = user.first_name + " " + user.last_name
+            else:
+                sender = user.username
+        else:
+            sender = Group.objects.get(id=sender[1]).name
+
+        # возвратить json в ответе
+        return HttpResponse(json.dumps({"sender": sender, "message": message}), status=200)
+
+    # сообщения нет - отправить пустое сообщение
+    return HttpResponse(json.dumps({"sender": "", "message": ""}), status=200)

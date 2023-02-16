@@ -220,12 +220,23 @@ input, textarea {
 }
 
 /* подвал */
-.footer {
+#footer {
     position: fixed;
     bottom: 0;
     width: 100%;
     height: 40px;
-    background: var(--face-bg);
+    background-color: var(--face-bg);
+    padding: 10px;
+    text-align: center;
+}
+
+/* пришедшее сообщение */
+#record {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    height: 40px;
+    background-color: lemonchiffon;
     padding: 10px;
     text-align: center;
 }
@@ -524,7 +535,11 @@ ul.messages li a.close {
         height: 250px;
     }
 
-    .footer {
+    #footer {
+        height: 60px;
+    }
+
+    #record {
         height: 60px;
     }
 }

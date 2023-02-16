@@ -9,6 +9,8 @@ import datetime
 import bleach
 from .views import rds
 
+expire_time = 3600
+
 
 class ChatConsumer(AsyncWebsocketConsumer):
     """
@@ -57,20 +59,17 @@ class ChatConsumer(AsyncWebsocketConsumer):
         # получить сообщение
         text_data_json = json.loads(text_data)
         message = bleach.clean(text_data_json["message"])
-        group = text_data_json["group"]
+        group_name = text_data_json["group"]
         username = text_data_json["username"]
         first_name = text_data_json["first_name"]
         last_name = text_data_json["last_name"]
         date_added = datetime.datetime.now()
 
         # сохранить сообщение в базе
-        await self.save_message(group, username, message)
+        await self.save_message(group_name, username, message)
 
-        # подсчет отправленных сообщений
-        await self.calc_messages(username)
-
-        # получить количество отправленных сообщений
-        count = await self.get_count(username)
+        # сохранить сообщение в стеке
+        await self.push_record(group_name, username, message)
 
         # разослать сообщение сокетам группы через chat_message
         await self.channel_layer.group_send(
@@ -78,12 +77,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
             {
                 "type": "chat_message",
                 "message": message,
-                "group": group,
+                "group": group_name,
                 "username": username,
                 "first_name": first_name,
                 "last_name": last_name,
                 "date_added": date_added,
-                "count": count,
             }
         )
 
@@ -99,7 +97,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
         username = event["username"]
         first_name = event["first_name"]
         last_name = event["last_name"]
-        count = event["count"]
 
         # отправить сообщение фронтэндам через сокет
         await self.send(text_data=json.dumps(
@@ -109,7 +106,6 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 "username": username,
                 "first_name": first_name,
                 "last_name": last_name,
-                "count": count,
             }
         ))
 
@@ -127,33 +123,36 @@ class ChatConsumer(AsyncWebsocketConsumer):
         Message.objects.create(user=user, group=group, content=message)
 
     @sync_to_async
-    def calc_messages(self, username):
-        """
-        Подсчет сообщений, отправленных пользователем
-        :param username:
-        :return:
-        """
-        try:
-            user_id = User.objects.get(username=username).id
-            redis_name = 'user_' + str(user_id)
-            if not rds.exists(redis_name):
-                rds.set(redis_name, 0)
-            rds.incr(redis_name)
-        except Exception:
-            pass
+    def push_record(self, group_name, username, message):
 
-    @sync_to_async
-    def get_count(self, username):
-        """
-        Получить количество сообщений, отправленных пользователем
-        :param username:
-        :return:
-        """
-        try:
-            user_id = User.objects.get(username=username).id
-            redis_name = 'user_' + str(user_id)
-            if not rds.exists(redis_name):
-                rds.set(redis_name, 0)
-            return int(rds.get(redis_name))
-        except Exception:
-            return 0
+        # получить пользователя
+        current_user = User.objects.get(username=username)
+        # получить группу
+        group = Group.objects.get(name=group_name)
+
+        # пара
+        if str(group_name).startswith("group_"):
+            ids = str(group_name).split("_")
+            ids.remove("group")
+            # отправить собеседнику
+            for user_id in ids:
+                # себе не отправлять
+                if int(user_id) != int(current_user.id):
+                    sender = "user:{}".format(current_user.id)
+                    target = "user:{}".format(user_id)
+                    record = json.dumps({"sender": sender, "message": message[:20]})
+                    rds.lpush(target, record)
+                    rds.expire(target, expire_time)
+
+        # группа
+        else:
+            users = User.objects.filter(groups=group)
+            # отправить каждому в группе
+            for user in users:
+                # себе не отправлять
+                if user != current_user:
+                    sender = "group:{}".format(group.id)
+                    target = "user:{}".format(user.id)
+                    record = json.dumps({"sender": sender, "message": message})
+                    rds.lpush(target, record)
+                    rds.expire(target, expire_time)

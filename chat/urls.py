@@ -23,6 +23,7 @@ urlpatterns = [
                   path('register/', views.register, name='register'),
                   path('group/', views.group, name='group'),
                   path('room/<str:room_name>/', views.room, name="room"),
+                  path('update/', views.update),
                   path('password_change/', auth_views.PasswordChangeView.as_view(), name='password_change'),
                   path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(),
                        name='password_change_done'),

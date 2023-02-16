@@ -52,7 +52,6 @@
                                         {% endif %}</b><br>
                                         <span style="font-size: 10px;">Заходил: {{ user.last_login|date:"d.m.Y, H:i:s" }}</span>
                                     </div>
-
                                 </div>
                             </div>
                         </a><br>
@@ -62,34 +61,17 @@
         </div>
     </form><br>
     <hr>
+    <!-- получить объекты для js -->
+    {{ current_group|json_script:"current-group" }}
+    {{ contr_name|json_script:"contr-name" }}
+    {{ current_user.id|json_script:"json-current" }}
 {% endblock %}
 
 {% block script %}
-
-    <!-- создать элемент из текущего пользователя -->
-    {{ current_user.id|json_script:"json-current" }}
-
-    <script>
-        // получить id текущего пользователя
-        const currentId = JSON.parse(document.getElementById('json-current').textContent);
-        console.log(currentId)
-
-        // обработать нажатие группы
-        function group_click(id) {
-            let roomName = 'group_' + id
-            console.log(roomName)
-            window.location.pathname = '/room/' + roomName + '/';
-        }
-
-        // обработать нажатие пользователя
-        function user_click(contrId) {
-            let roomName = 'group_'
-            Number(contrId) < Number(currentId) ? roomName += contrId + '_' + currentId : roomName += currentId + '_' + contrId
-            window.location.pathname = '/room/' + roomName + '/';
-        }
-    </script>
+    <script src="/static/js/update.js"></script>
+    <script src="/static/js/chat.js"></script>
 {% endblock %}
 
 {% block footer %}
-    просмотр списка групп и пользователей с переходом на отправку им сообщений
+    <div id="footer">просмотр списка групп и пользователей с переходом на отправку им сообщений</div>
 {% endblock %}

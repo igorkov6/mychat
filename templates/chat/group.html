@@ -35,13 +35,16 @@
                                                                                         style="font-weight: bold"></span>
         </button>
     </div>
-
+    <!-- получить объекты для js -->
+    {{ current_group|json_script:"current-group" }}
+    {{ contr_name|json_script:"contr-name" }}
 {% endblock %}
 
 {% block script %}
+    <script src="/static/js/update.js"></script>
     <script src="/static/js/group.js"></script>
 {% endblock %}
 
 {% block footer %}
-    создание, редактирование и удаление групповых чатов по REST API
+    <div id="footer">создание, редактирование и удаление групповых чатов по REST API</div>
 {% endblock %}
