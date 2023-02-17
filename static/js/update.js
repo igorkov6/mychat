@@ -31,7 +31,7 @@ async function checkForUpdate(url, data, csrftoken) {
         if (sender && message) {
             // сообщение от неоткрытого отправителя
             if(sender !== currentGroup && sender !== contrName){
-                document.querySelector('.footer').innerHTML = '<div id="record">' +  sender + ': ' + message + '</div>';
+                document.querySelector('.footer').innerHTML = '<div id="footer" style="background-color: lemonchiffon">' +  sender + ': ' + message + '</div>';
                 // очистка футера через 5 секунд
                 setTimeout(() => {
                     document.querySelector('.footer').innerHTML = '<div id="footer"></div>';

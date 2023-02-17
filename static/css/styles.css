@@ -150,7 +150,7 @@ input, textarea {
 }
 
 .social li.google {
-    background:#3b5399;
+    background: #3b5399;
 }
 
 .social li.register {
@@ -226,17 +226,6 @@ input, textarea {
     width: 100%;
     height: 40px;
     background-color: var(--face-bg);
-    padding: 10px;
-    text-align: center;
-}
-
-/* пришедшее сообщение */
-#record {
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-    height: 40px;
-    background-color: lemonchiffon;
     padding: 10px;
     text-align: center;
 }
