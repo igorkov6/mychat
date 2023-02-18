@@ -45,7 +45,7 @@ chatSocket.onmessage = function (e) {
     }
 
     // получить сообщение
-    let chatMessage = '<span class="chat-text">' + data.message + '</span><br>'
+    let chatMessage = '<span class="chat-text"><i>' + data.message + '</i></span><br>'
 
     // получить текущую дату
     let today = new Date();

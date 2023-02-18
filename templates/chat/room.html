@@ -43,7 +43,7 @@
                         {% endif %}
                     </span><br>
                 {% endif %}
-                <span class="chat-text">{{ report.content }}</span><br>
+                <span class="chat-text"><i>{{ report.content }}</i></span><br>
                 <div id="chat-time">{{ report.date_added|date:"d.m.Y, H:i:s" }}</div>
             </div>
         {% endfor %}

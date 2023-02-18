@@ -1,6 +1,24 @@
 getGroups().then(() => {
 })
 
+// получить куки
+// https://docs.djangoproject.com/en/4.0/ref/csrf/#ajax
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            // Does this cookie string begin with the name we want?
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
 // получить группы
 async function getGroups() {
     // отправляем запрос
@@ -95,6 +113,7 @@ async function userIncludedClick(url) {
         let resp = await fetch(url, {
             method: "PATCH",
             headers: {
+                "X-CSRFToken": getCookie('csrftoken'),
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             },
@@ -123,6 +142,7 @@ async function userExcludedClick(url) {
         let resp = await fetch(url, {
             method: "PATCH",
             headers: {
+                "X-CSRFToken": getCookie('csrftoken'),
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             },
@@ -143,6 +163,7 @@ async function deleteGroup() {
         let response = await fetch(groupName, {
             method: "DELETE",
             headers: {
+                "X-CSRFToken": getCookie('csrftoken'),
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             },
@@ -163,6 +184,7 @@ async function createGroup() {
         let response = await fetch("/api/groups/", {
             method: "POST",
             headers: {
+                "X-CSRFToken": getCookie('csrftoken'),
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             },
@@ -186,6 +208,7 @@ async function updateGroup() {
         let response = await fetch(groupName, {
             method: "PUT",
             headers: {
+                "X-CSRFToken": getCookie('csrftoken'),
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             },
